@@ -4,8 +4,8 @@ import { WaslaLogo } from '../components/WaslaLogo'
 import { InstagramIcon, FacebookIcon, WhatsAppIcon } from '../components/SocialIcons'
 import {
   Send,
-  LayoutDashboard, Inbox, Users, Zap, Settings, Search,
-  Bell, MoreVertical, Phone, Video, UserPlus, FileText,
+  LayoutDashboard, Inbox, Users, Zap, Settings, Search, ChevronRight,
+  Bell, MoreVertical, Phone, UserPlus, FileText,
   TrendingUp, MessageSquare, Clock, Filter, CheckCircle
 } from 'lucide-react'
 
@@ -33,6 +33,7 @@ interface Message {
 export default function DemoPage() {
   const [activeTab, setActiveTab] = useState('inbox')
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
+  const [isMobileChatOpen, setIsMobileChatOpen] = useState(false)
   const [contacts, setContacts] = useState<Contact[]>([
     { id: 1, name: 'سارة أحمد', platform: 'instagram', status: 'completed', lastMessage: 'تم تأكيد الحجز، شكراً!', timeAgo: 'منذ ساعتين', avatar: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 555 12 34 56', tags: ['زبونة دائمة', 'دورة الخياطة'] },
     { id: 2, name: 'نورة محمد', platform: 'whatsapp', status: 'processing', lastMessage: 'هل يمكن الدفع عند الاستلام؟', timeAgo: 'منذ 5 د', avatar: 'https://images.unsplash.com/photo-1563240381-5ccf7690ca08?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 661 98 76 54', tags: ['مهتمة', 'استفسار'] },
@@ -69,13 +70,20 @@ export default function DemoPage() {
 
   // Set default selected contact on load
   useEffect(() => {
-    if (!selectedContact && contacts.length > 0) {
-      setSelectedContact(contacts[1]) // Select Noura as default
+    if (!selectedContact && contacts.length > 0 && window.innerWidth > 768) {
+      setSelectedContact(contacts[1]) // Select Noura as default on desktop
     }
   }, [])
 
+  const handleContactSelect = (contact: Contact) => {
+    setSelectedContact(contact)
+    if (window.innerWidth <= 768) {
+      setIsMobileChatOpen(true)
+    }
+  }
+
   return (
-    <div className="dashboard-layout">
+    <div className={`dashboard-layout ${isMobileChatOpen ? 'mobile-chat-open' : ''}`}>
       {/* Sidebar (Right side for RTL) */}
       <aside className="sidebar">
         <div className="sidebar-header">
@@ -141,7 +149,7 @@ export default function DemoPage() {
         {activeTab === 'inbox' ? (
           <div className="inbox-container">
             {/* Conversations List */}
-            <div className="conversations-sidebar">
+            <div className={`conversations-sidebar ${isMobileChatOpen ? 'hidden-mobile' : ''}`}>
               <div className="sidebar-tools">
                 <h3>المحادثات</h3>
                 <button className="icon-btn" aria-label="تصفية" title="تصفية"><Filter size={16} /></button>
@@ -151,7 +159,7 @@ export default function DemoPage() {
                   <div
                     key={contact.id}
                     className={`conv-item ${selectedContact?.id === contact.id ? 'active' : ''}`}
-                    onClick={() => setSelectedContact(contact)}
+                    onClick={() => handleContactSelect(contact)}
                   >
                     <div className="avatar-wrapper">
                       <img src={contact.avatar} alt={contact.name} className="avatar-img" />
@@ -178,16 +186,24 @@ export default function DemoPage() {
               {selectedContact ? (
                 <>
                   <div className="chat-header">
-                    <div className="contact-summary">
-                      <img src={selectedContact.avatar} alt={selectedContact.name} />
-                      <div>
-                        <h4>{selectedContact.name}</h4>
-                        <span className="status-indicator online">متصل الآن</span>
+                    <div className="chat-header-left">
+                      <button
+                        className="back-btn-mobile"
+                        onClick={() => setIsMobileChatOpen(false)}
+                        aria-label="الرجوع"
+                      >
+                        <ChevronRight size={24} />
+                      </button>
+                      <div className="contact-summary">
+                        <img src={selectedContact.avatar} alt={selectedContact.name} />
+                        <div>
+                          <h4>{selectedContact.name}</h4>
+                          <span className="status-indicator online">متصل الآن</span>
+                        </div>
                       </div>
                     </div>
                     <div className="chat-actions">
                       <button className="icon-btn" aria-label="اتصال هاتفي" title="اتصال هاتفي"><Phone size={18} /></button>
-                      <button className="icon-btn" aria-label="اتصال فيديو" title="اتصال فيديو"><Video size={18} /></button>
                       <button className="icon-btn" aria-label="خيارات إضافية" title="خيارات إضافية"><MoreVertical size={18} /></button>
                     </div>
                   </div>
@@ -749,18 +765,176 @@ export default function DemoPage() {
           border-width: 0;
         }
 
-        /* Media Queries */
+        /* Media Queries & Mobile Responsiveness */
         @media (max-width: 1024px) {
           .details-panel { display: none; }
         }
+
         @media (max-width: 768px) {
-          .sidebar { width: 80px; }
-          .sidebar span, .brand-name, .user-info { display: none; }
-          .sidebar-header { justify-content: center; }
-          .conversations-sidebar { width: 100px; }
-          .conv-header, .conv-last-msg { display: none; }
-          .sidebar-tools h3 { display: none; }
-          .dashboard-grid { grid-template-columns: 1fr; }
+          .dashboard-layout {
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            padding-bottom: 70px; /* Space for bottom nav */
+          }
+
+          .sidebar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 70px;
+            flex-direction: row;
+            padding: 0;
+            border-left: none;
+            border-top: 1px solid #e2e8f0;
+            justify-content: space-around;
+            z-index: 1001;
+            background: white;
+          }
+
+          .sidebar-header, 
+          .sidebar-footer .user-profile, 
+          .brand-name {
+            display: none;
+          }
+
+          .sidebar-nav {
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-around;
+            gap: 0;
+          }
+
+          .nav-item {
+            flex-direction: column !important;
+            padding: 0.5rem !important;
+            font-size: 0.7rem !important;
+            gap: 2px !important;
+            flex: 1;
+            border-radius: 0;
+            align-items: center !important;
+          }
+
+          .nav-item.active {
+            background: transparent !important;
+            color: #be185d !important;
+          }
+
+          .nav-item-content {
+            flex-direction: column;
+            gap: 2px;
+          }
+
+          .sidebar-footer {
+            display: none !important; 
+          }
+
+          .main-content {
+            height: calc(100vh - 70px);
+          }
+
+          .topbar {
+            padding: 0 1rem;
+            height: 60px;
+          }
+
+          .search-bar {
+            width: 100%;
+          }
+
+          /* Inbox Mobile State */
+          .inbox-container {
+            display: block;
+            position: relative;
+          }
+
+          .conversations-sidebar {
+            width: 100% !important;
+            height: 100%;
+          }
+
+          .conversations-sidebar.hidden-mobile {
+            display: none;
+          }
+
+          .chat-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 70px; /* Above bottom nav */
+            z-index: 1010;
+            display: none;
+            background: #f8fafc;
+          }
+
+          .mobile-chat-open .chat-area {
+            display: flex;
+          }
+
+          .back-btn-mobile {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            margin-left: 0.5rem;
+            color: #be185d;
+            background: transparent;
+            border: none;
+          }
+
+          .chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          }
+
+          .chat-messages {
+            padding: 1rem;
+          }
+
+          .message-bubble-wrapper {
+            max-width: 85%;
+          }
+
+          .dashboard-home {
+            padding: 1rem;
+          }
+
+          .dashboard-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+
+          .metric-value {
+            font-size: 1.5rem;
+          }
+
+          .activity-section {
+            padding: 1rem;
+          }
+
+          .chart-placeholder {
+            gap: 0.5rem;
+            height: 150px;
+          }
+
+          .chart-labels span {
+            font-size: 0.6rem;
+          }
+        }
+
+        /* Utility for back button */
+        .back-btn-mobile {
+          display: none;
+        }
+
+        .chat-header-left {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
         }
       `}</style>
     </div>
