@@ -19,10 +19,13 @@ export default function LandingPage() {
           </div>
           <div className="nav-buttons">
             <Link to="/demo" className="btn btn-secondary">جرّبي Demo</Link>
-            <a href="#contact" className="btn btn-primary">
+            <button
+              onClick={() => (window as any).$chatwoot.toggle()}
+              className="btn btn-primary"
+            >
               <Calendar className="w-5 h-5" size={20} />
               احجزي استشارة
-            </a>
+            </button>
           </div>
         </div>
       </nav>
@@ -44,10 +47,13 @@ export default function LandingPage() {
                 <Play className="icon-sm" size={24} />
                 جرّبي Demo مجاناً
               </Link>
-              <a href="#contact" className="btn btn-secondary btn-lg">
+              <button
+                onClick={() => (window as any).$chatwoot.toggle()}
+                className="btn btn-secondary btn-lg"
+              >
                 <Calendar className="icon-sm" size={24} />
                 احجزي استشارة
-              </a>
+              </button>
             </div>
             <div className="hero-platforms animate-fade-in" style={{ animationDelay: '0.4s' }}>
               <div className="platform-badge">

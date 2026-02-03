@@ -16,6 +16,22 @@
 <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+        (function (d, t) {
+            var BASE_URL = "https://chatwoot.panel.nawaedutech.com";
+            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            g.src = BASE_URL + "/packs/js/sdk.js";
+            g.defer = true;
+            g.async = true;
+            g.onload = function () {
+                window.chatwootSDK.run({
+                    websiteToken: 'fL6w7m9Yp78B2f8C3p7j1e4z',
+                    baseUrl: BASE_URL
+                })
+            }
+            s.parentNode.insertBefore(g, s);
+        })(document, "script");
+    </script>
 </body>
 
 </html>
