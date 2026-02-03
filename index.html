@@ -21,15 +21,14 @@
             var BASE_URL = "https://chatwoot.panel.nawaedutech.com";
             var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
             g.src = BASE_URL + "/packs/js/sdk.js";
-            g.defer = true;
             g.async = true;
+            s.parentNode.insertBefore(g, s);
             g.onload = function () {
                 window.chatwootSDK.run({
-                    websiteToken: 'fL6w7m9Yp78B2f8C3p7j1e4z',
+                    websiteToken: 'fT8v47WUVV8zPsjZmxuxUYrQ',
                     baseUrl: BASE_URL
                 })
             }
-            s.parentNode.insertBefore(g, s);
         })(document, "script");
     </script>
 </body>
