@@ -1,4 +1,3 @@
-import React from 'react';
 
 export const WaslaLogo = ({ size = 48, className = "" }) => (
     <svg
