@@ -596,6 +596,82 @@ button {
   align-items: center;
 }
 
+/* Workflow Section */
+.workflow-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-3xl);
+}
+
+.workflow-step {
+  flex: 1;
+  background: white;
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-primary-fade);
+  transition: var(--transition-base);
+}
+
+.workflow-step:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.workflow-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-lg);
+}
+
+.bg-primary-light {
+  background-color: var(--color-primary-fade);
+}
+
+.bg-secondary-light {
+  background-color: var(--color-accent-light);
+}
+
+.bg-success-light {
+  background-color: #ecfdf5;
+}
+
+.workflow-step h3 {
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.workflow-step p {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.connector-icon {
+  color: var(--color-primary-light);
+  transform: rotate(180deg);
+  /* Mirror for RTL if needed, but ChevronRight is usually fine */
+}
+
+@media (max-width: 1024px) {
+  .workflow-grid {
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+
+  .workflow-connector {
+    transform: rotate(90deg);
+  }
+}
+
 /* --- Responsive Updates --- */
 @media (max-width: 1024px) {
   :root {

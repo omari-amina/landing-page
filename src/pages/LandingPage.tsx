@@ -5,7 +5,7 @@ import {
   Play, Calendar, Sparkles,
   Smartphone, AlertOctagon, TrendingDown, Clock, Target, Bot,
   RefreshCw, Inbox, Tag, CheckCircle, BookOpen, ShoppingBag,
-  Dumbbell, Palette
+  Dumbbell, Palette, MessageSquare, ChevronRight, Zap
 } from 'lucide-react'
 
 export default function LandingPage() {
@@ -256,6 +256,50 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Automation Flow Section */}
+      <section className="section bg-white">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="section-title">كيف تعمل أتمتة "وصلة"؟</h2>
+            <p className="section-subtitle">نظام ذكي يعمل خلف الكواليس ليدير أعمالكِ بدقة متناهية</p>
+          </div>
+
+          <div className="workflow-grid">
+            <div className="workflow-step">
+              <div className="workflow-icon bg-primary-light">
+                <MessageSquare className="text-primary" size={32} />
+              </div>
+              <h3>1. استقبال الرسالة</h3>
+              <p>يصل استفسار من الزبونة عبر Instagram أو WhatsApp أو Facebook إلى منصة Chatwoot الموحدة.</p>
+            </div>
+
+            <div className="workflow-connector">
+              <ChevronRight className="connector-icon" size={32} />
+            </div>
+
+            <div className="workflow-step">
+              <div className="workflow-icon bg-secondary-light">
+                <Zap className="text-secondary" size={32} />
+              </div>
+              <h3>2. المعالجة الذكية (n8n)</h3>
+              <p>يقوم محرك n8n بتحليل الرسالة، تحديد نوع الطلب، واسترجاع الإجابة المناسبة من Typebot.</p>
+            </div>
+
+            <div className="workflow-connector">
+              <ChevronRight className="connector-icon" size={32} />
+            </div>
+
+            <div className="workflow-step">
+              <div className="workflow-icon bg-success-light">
+                <CheckCircle className="text-success" size={32} />
+              </div>
+              <h3>3. الرد والتنفيذ</h3>
+              <p>يتم الرد آلياً على الزبونة، مع تسجيل بيانات الطلب في قاعدة بياناتكِ وتنبيهكِ فوراً.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="section final-cta-section" id="contact">
         <div className="container">
@@ -269,10 +313,13 @@ export default function LandingPage() {
                 <Play size={24} />
                 جرّبي Demo
               </Link>
-              <a href="https://wa.me/213000000000" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-lg">
+              <button
+                onClick={() => (window as any).$chatwoot.toggle()}
+                className="btn btn-secondary btn-lg"
+              >
                 <Calendar size={24} />
                 احجزي استشارة مجانية
-              </a>
+              </button>
             </div>
           </div>
         </div>
