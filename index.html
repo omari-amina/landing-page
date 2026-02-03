@@ -26,7 +26,9 @@
             g.onload = function () {
                 window.chatwootSDK.run({
                     websiteToken: 'fT8v47WUVV8zPsjZmxuxUYrQ',
-                    baseUrl: BASE_URL
+                    baseUrl: BASE_URL,
+                    type: 'expanded_bubble', // Optional: for a better look
+                    widgetColor: '#be185d'   // <--- This is your brand color!
                 })
             }
         })(document, "script");
