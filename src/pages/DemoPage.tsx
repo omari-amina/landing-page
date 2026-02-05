@@ -127,8 +127,16 @@ export default function DemoPage() {
         }
       });
       const data = await response.json();
+      console.log('Chatwoot Messages API Raw Data:', data);
 
-      const mappedMessages: Message[] = data.payload.map((msg: any) => ({
+      const messages = Array.isArray(data) ? data : data.payload;
+
+      if (!messages || !Array.isArray(messages)) {
+        console.warn('No messages found in response or invalid format');
+        return;
+      }
+
+      const mappedMessages: Message[] = messages.map((msg: any) => ({
         id: msg.id,
         sender: msg.message_type === 0 ? 'contact' : 'me',
         text: msg.content || '',
