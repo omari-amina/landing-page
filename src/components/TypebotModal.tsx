@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, Send, User, ChevronLeft } from 'lucide-react';
+import { X, Send } from 'lucide-react';
 
 interface TypebotModalProps {
     isOpen: boolean;
@@ -66,7 +66,7 @@ export function TypebotModal({ isOpen, onClose, onComplete }: TypebotModalProps)
         if (!input.trim()) return;
 
         setMessages(prev => [...prev, { text: input, sender: 'user' }]);
-        const currentInput = input;
+
         setInput('');
 
         // Proceed to next bot message
@@ -88,7 +88,7 @@ export function TypebotModal({ isOpen, onClose, onComplete }: TypebotModalProps)
                             <span>يعمل الآن</span>
                         </div>
                     </div>
-                    <button onClick={onClose} className="close-btn"><X size={20} /></button>
+                    <button onClick={onClose} className="close-btn" aria-label="Close modal" title="إغلاق"><X size={20} /></button>
                 </div>
 
                 <div className="typebot-messages">
@@ -115,7 +115,7 @@ export function TypebotModal({ isOpen, onClose, onComplete }: TypebotModalProps)
                         onChange={(e) => setInput(e.target.value)}
                         autoFocus
                     />
-                    <button type="submit" className="tb-send-btn" disabled={!input.trim()}>
+                    <button type="submit" className="tb-send-btn" disabled={!input.trim()} aria-label="Send message" title="إرسال">
                         <Send size={18} />
                     </button>
                 </form>
