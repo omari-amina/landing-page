@@ -102,7 +102,7 @@ export function TypebotModal({ isOpen, onClose, onComplete }: TypebotModalProps)
                 <div className="typebot-header">
                     <div className="bot-info">
                         <div className="bot-avatar">
-                            <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Bot" />
+                            <img src="/chat-logo.jpg" alt="Bot" />
                         </div>
                         <div>
                             <h4>تحدي التسعير</h4>
@@ -117,7 +117,7 @@ export function TypebotModal({ isOpen, onClose, onComplete }: TypebotModalProps)
                         <div key={idx} className={`tb-msg-row ${msg.sender}`}>
                             {msg.sender === 'bot' && (
                                 <div className="tb-avatar-small">
-                                    <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" alt="Bot" />
+                                    <img src="/chat-logo.jpg" alt="Bot" />
                                 </div>
                             )}
                             <div className="tb-bubble">
