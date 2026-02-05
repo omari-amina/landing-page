@@ -11,6 +11,7 @@ export function TypebotModal({ isOpen, onClose, onComplete }: TypebotModalProps)
     const [step, setStep] = useState(0);
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState<{ text: string; sender: 'bot' | 'user' }[]>([]);
+    const [formData, setFormData] = useState<Record<string, string>>({});
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     // Bot Script
@@ -55,9 +56,23 @@ export function TypebotModal({ isOpen, onClose, onComplete }: TypebotModalProps)
             }, currentItem.delay);
         } else if (currentItem.action === 'finish') {
             setTimeout(() => {
+                submitToN8n(); // Fire the webhook
                 onComplete();
                 onClose();
             }, currentItem.delay);
+        }
+    };
+
+    const submitToN8n = async () => {
+        try {
+            await fetch('https://n8n.panel.nawaedutech.com/webhook/cost-challenge', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            console.log('Data sent to n8n');
+        } catch (error) {
+            console.error('Error sending to n8n:', error);
         }
     };
 
@@ -66,6 +81,12 @@ export function TypebotModal({ isOpen, onClose, onComplete }: TypebotModalProps)
         if (!input.trim()) return;
 
         setMessages(prev => [...prev, { text: input, sender: 'user' }]);
+
+        // Capture data if current step expects input
+        const currentItem = script[step];
+        if (currentItem && currentItem.key) {
+            setFormData(prev => ({ ...prev, [currentItem.key!]: input }));
+        }
 
         setInput('');
 
