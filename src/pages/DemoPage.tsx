@@ -73,26 +73,42 @@ export default function DemoPage() {
 
   const fetchConversations = async () => {
     try {
-      const response = await fetch(`${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations`, {
+      console.log('Fetching conversations from:', `${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations?status=all&assignee_type=all`);
+      const response = await fetch(`${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations?status=all&assignee_type=all`, {
         headers: {
           'api_access_token': CHATWOOT_API_TOKEN,
           'Content-Type': 'application/json'
         }
       });
-      const data = await response.json();
 
-      const mappedContacts: Contact[] = data.payload.map((conv: any) => ({
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Chatwoot API Raw Data:', data);
+
+      // Chatwoot sometimes returns the array directly, sometimes in a payload
+      const conversations = Array.isArray(data) ? data : data.payload;
+
+      if (!conversations) {
+        console.warn('No conversations found in response');
+        return;
+      }
+
+      const mappedContacts: Contact[] = conversations.map((conv: any) => ({
         id: conv.id,
-        name: conv.meta.sender.name || 'عميل مجهول',
-        platform: conv.meta.channel.split('::')[1]?.toLowerCase().includes('instagram') ? 'instagram' :
-          conv.meta.channel.split('::')[1]?.toLowerCase().includes('whatsapp') ? 'whatsapp' : 'facebook',
+        name: conv.meta?.sender?.name || 'عميل مجهول',
+        platform: conv.meta?.channel?.split('::')[1]?.toLowerCase().includes('instagram') ? 'instagram' :
+          conv.meta?.channel?.split('::')[1]?.toLowerCase().includes('whatsapp') ? 'whatsapp' : 'facebook',
         status: conv.status === 'open' ? 'new' : 'completed',
-        lastMessage: conv.messages?.[0]?.content || '',
+        lastMessage: conv.messages?.[0]?.content || 'لا توجد رسائل',
         timeAgo: new Date(conv.timestamp * 1000).toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }),
-        avatar: conv.meta.sender.thumbnail || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop',
+        avatar: conv.meta?.sender?.thumbnail || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop',
         tags: conv.labels || []
       }));
 
+      console.log('Mapped Contacts:', mappedContacts);
       setContacts(mappedContacts);
       if (!selectedContact && mappedContacts.length > 0) {
         setSelectedContact(mappedContacts[0]);
