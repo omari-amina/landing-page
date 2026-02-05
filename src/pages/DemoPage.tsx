@@ -204,6 +204,8 @@ export default function DemoPage() {
   useEffect(() => {
     if (selectedContact) {
       fetchMessages(selectedContact.id);
+      const interval = setInterval(() => fetchMessages(selectedContact.id), 5000); // Poll messages every 5s
+      return () => clearInterval(interval);
     }
   }, [selectedContact])
 
