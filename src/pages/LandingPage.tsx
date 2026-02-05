@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { WaslaLogo } from '../components/WaslaLogo'
-import { InstagramIcon, FacebookIcon, WhatsAppIcon } from '../components/SocialIcons'
+import { WhatsAppIcon } from '../components/SocialIcons'
 import {
   Play, Calendar, Sparkles,
   Smartphone, AlertOctagon, TrendingDown, Clock, Target, Bot,
@@ -34,36 +34,40 @@ export default function LandingPage() {
       <section className="hero">
         <div className="container hero-layout">
           <div className="hero-content">
+            <div className="trust-badge animate-fade-in">
+              <Sparkles size={16} className="text-secondary" />
+              <span>لا تحتاجي لخبرة تقنية 100%</span>
+            </div>
+
             <h1 className="hero-title animate-slide-up">
-              كل رسائل زبوناتك…
-              <span className="hero-highlight">في مكان واحد</span>
-              <span className="hero-subtitle-inline">بدون فوضى</span>
+              تهناي من تعب "بشحال؟"..
+              <span className="hero-highlight">خلي الرد آلي والبيع ماشي!</span>
             </h1>
+
             <p className="hero-description animate-slide-up" style={{ animationDelay: '0.1s' }}>
-              نظام ذكي يجمع رسائل Instagram وFacebook وWhatsApp ويحوّلها إلى طلبات منظمة.
+              جمعي قاع ميساجاتك تاع (Instagram, FB, WhatsApp) في بلاصة وحدة. زبوناتك يفرحوا بالرد السريع، وأنتِ تفضي راسك للشغل الصح.
             </p>
+
             <div className="hero-cta animate-slide-up" style={{ animationDelay: '0.2s' }}>
               <Link to="/demo" className="btn btn-primary btn-lg">
                 <Play className="icon-sm" size={24} />
-                جرّبي Demo مجاناً
+                سييه درك (Demo مجاني)
               </Link>
               <button
                 onClick={() => (window as any).$chatwoot.toggle()}
                 className="btn btn-secondary btn-lg"
               >
                 <Calendar className="icon-sm" size={24} />
-                احجزي استشارة
+                احكي معانا فـ واتساب
               </button>
             </div>
-            <div className="hero-platforms animate-fade-in" style={{ animationDelay: '0.4s' }}>
-              <div className="platform-badge">
-                <InstagramIcon size={18} className="platform-icon" /> Instagram
-              </div>
-              <div className="platform-badge">
-                <FacebookIcon size={18} className="platform-icon" /> Facebook
-              </div>
-              <div className="platform-badge">
-                <WhatsAppIcon size={18} className="platform-icon" /> WhatsApp
+
+            <div className="social-proof-small animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              <span>تثق بنا 50+ رائدة أعمال في الجزائر</span>
+              <div className="proof-logos">
+                <div className="mini-logo">DZ Shop</div>
+                <div className="mini-logo">Nawa Deco</div>
+                <div className="mini-logo">Hiba Prints</div>
               </div>
             </div>
           </div>
@@ -224,33 +228,98 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Special Offer for Printers / CostCrafter Upsell */}
+      <section className="section bg-primary-fade" style={{ background: 'rgba(190, 24, 93, 0.03)' }}>
+        <div className="container">
+          <div className="printing-upsell-card card">
+            <div className="grid-2">
+              <div className="upsell-text">
+                <div className="tag-special">حصرياً لمجال الطباعة والهدايا 🎁</div>
+                <h2>تعبتي من حساب "ثمن السلعة + الفائدة" في كل مرة؟</h2>
+                <p>
+                  نظام "وصلة" يأتيكِ مدمجاً مع **CostCrafter Pro**: البرنامج الوحيد الذي يحسب لكِ تكاليف الطباعة بدقة (الأوراق، الحبر، الوقت) ويعطيكِ السعر المربح في ثانية.
+                </p>
+                <ul className="upsell-list">
+                  <li><CheckCircle size={16} /> حساب تلقائي لكل أنواع الفينيل والورق.</li>
+                  <li><CheckCircle size={16} /> تحديد هامش ربحكِ الحقيقي بضغطة زر.</li>
+                  <li><CheckCircle size={16} /> إرسال الفاتورة للزبونة آلياً عبر واتساب.</li>
+                </ul>
+                <Link to="/demo" className="btn btn-primary">جربي حاسبة التسعير بالديمو</Link>
+              </div>
+              <div className="upsell-visual">
+                <div className="price-tag-animate">
+                  <span className="old-price">4500 دج</span>
+                  <span className="new-price">0 دج (مجانًا مع Pro)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Target Audience (Gray) */}
       <section className="section section-bg-subtle audience-section">
         <div className="container">
           <h2 className="section-title">👩‍💼 لمن هذه الخدمة؟</h2>
           <p className="section-subtitle">
-            إذا كنتِ تستقبلين طلبات عبر السوشيال ميديا، هذا النظام لك
+            إذا كنتِ تستقبلين طلبات عبر السوشيال ميديا، "وصلة" صُممت خصيصاً لكِ
           </p>
           <div className="grid-4 audience-grid">
             <div className="card audience-card">
-              <div className="audience-icon"><BookOpen strokeWidth={1.5} size={48} color="#0d9488" /></div>
-              <h3>مشاريع تعليمية</h3>
-              <p>كورسات، دروس خصوصية، ورش عمل</p>
+              <div className="audience-icon"><Palette strokeWidth={1.5} size={48} color="#0d9488" /></div>
+              <h3>صاحبات المطابع</h3>
+              <p>حساب التكاليف، إدارة الطلبات، ومتابعة التصاميم بذكاء.</p>
             </div>
             <div className="card audience-card">
               <div className="audience-icon"><ShoppingBag strokeWidth={1.5} size={48} color="#0d9488" /></div>
-              <h3>متاجر صغيرة</h3>
-              <p>ملابس، إكسسوارات، منتجات يدوية</p>
+              <h3>متاجر الهدايا</h3>
+              <p>إدارة الطلبات المخصصة والتوصيل بدون نسيان أي تفصيل.</p>
+            </div>
+            <div className="card audience-card">
+              <div className="audience-icon"><BookOpen strokeWidth={1.5} size={48} color="#0d9488" /></div>
+              <h3>التدريب والكورسات</h3>
+              <p>تسجيل المتدربات آلياً وإرسال المواعيد عبر واتساب.</p>
             </div>
             <div className="card audience-card">
               <div className="audience-icon"><Dumbbell strokeWidth={1.5} size={48} color="#0d9488" /></div>
-              <h3>مدربات</h3>
-              <p>تدريب رياضي، تغذية، تطوير ذات</p>
+              <h3>خدمات منزلية</h3>
+              <p>تنظيم المواعيد والدروس الخصوصية والحلويات وغيرها.</p>
             </div>
-            <div className="card audience-card">
-              <div className="audience-icon"><Palette strokeWidth={1.5} size={48} color="#0d9488" /></div>
-              <h3>صانعات محتوى</h3>
-              <p>مؤثرات، مجالات متعددة، منتجات رقمية</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="section">
+        <div className="container">
+          <h2 className="section-title">🌟 شركاء النجاح</h2>
+          <div className="grid-3">
+            <div className="card testimonial-card">
+              <p>"كنت ننسى نص الطلبات، درك السيستيم هو اللي يفكرني ويجاوب الزبونات حتى وأنا راقدة. أنصح به كل وحدة عندها مشروع."</p>
+              <div className="testimonial-user">
+                <div className="user-info">
+                  <strong>منال - Nawa Deco</strong>
+                  <span>صاحبة مشروع هدايا</span>
+                </div>
+              </div>
+            </div>
+            <div className="card testimonial-card">
+              <p>"برنامج التسعير وحده وفر عليا ساعات من الحسابات. قبل كنت نخسر بلا ما نحس، درك كل شي بالحساب والربح مضمون."</p>
+              <div className="testimonial-user">
+                <div className="user-info">
+                  <strong>سناء - DZ Creative</strong>
+                  <span>ورشة طباعة حرارية</span>
+                </div>
+              </div>
+            </div>
+            <div className="card testimonial-card">
+              <p>"أحسن استثمار درته هاد العام. الفوضى تاع انستاجرام راحت وولات عندي قائمة زبونات منظمة ونقدر نعاود نبعتلهم عروض."</p>
+              <div className="testimonial-user">
+                <div className="user-info">
+                  <strong>خيرة - Sweet Cook</strong>
+                  <span>خدمات حلويات</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -300,30 +369,93 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section className="section section-bg-subtle" id="pricing">
+        <div className="container">
+          <h2 className="section-title">📦 خطط تناسب ميزانيتك</h2>
+          <p className="section-subtitle">اختاري الباقة اللي تساعدك وابدئي تنظمي مشروعك اليوم</p>
+
+          <div className="grid-3 pricing-grid">
+            {/* Starter */}
+            <div className="card pricing-card">
+              <div className="pricing-header">
+                <h3>باقة الانطلاق</h3>
+                <div className="price">5000 <span>دج/شهر</span></div>
+              </div>
+              <ul className="pricing-features">
+                <li><CheckCircle size={16} /> قناة واحدة (واتساب أو انستجرام)</li>
+                <li><CheckCircle size={16} /> صندوق وارد موحد</li>
+                <li><CheckCircle size={16} /> تقرير شهري للطلبات</li>
+                <li><CheckCircle size={16} /> دعم تقني قياسي</li>
+              </ul>
+              <button className="btn btn-secondary w-full" onClick={() => (window as any).$chatwoot.toggle()}>ابدئي الآن</button>
+            </div>
+
+            {/* Pro */}
+            <div className="card pricing-card featured">
+              <div className="badge-featured">الأكثر طلباً ✨</div>
+              <div className="pricing-header">
+                <h3>باقة المحترفات</h3>
+                <div className="price">12000 <span>دج/شهر</span></div>
+              </div>
+              <ul className="pricing-features">
+                <li><CheckCircle size={16} /> جميع القنوات (FB, IG, WA)</li>
+                <li><CheckCircle size={16} /> أتمتة الردود الذكية (Typebot)</li>
+                <li><CheckCircle size={16} /> **مجانًا: حاسبة CostCrafter**</li>
+                <li><CheckCircle size={16} /> ربط مع Google Sheets</li>
+                <li><CheckCircle size={16} /> دعم تقني أسرع</li>
+              </ul>
+              <button className="btn btn-primary w-full" onClick={() => (window as any).$chatwoot.toggle()}>اختاري Pro</button>
+            </div>
+
+            {/* Premium */}
+            <div className="card pricing-card">
+              <div className="pricing-header">
+                <h3>باقة القمة</h3>
+                <div className="price">25000 <span>دج/شهر</span></div>
+              </div>
+              <ul className="pricing-features">
+                <li><CheckCircle size={16} /> تخصيص كامل للسيناريوهات</li>
+                <li><CheckCircle size={16} /> ربط مع أنظمة الشحن بالجزائر</li>
+                <li><CheckCircle size={16} /> تذكير الزبونات آلياً (Retention)</li>
+                <li><CheckCircle size={16} /> دعم VIP هاتفياً</li>
+                <li><CheckCircle size={16} /> استشارات تسويقية دورية</li>
+              </ul>
+              <button className="btn btn-secondary w-full" onClick={() => (window as any).$chatwoot.toggle()}>اطلبي مخصصة</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="section final-cta-section" id="contact">
         <div className="container">
           <div className="final-cta-box">
-            <h2>🚀 ابدئي الآن</h2>
+            <h2>🚀 ما تضيعيش وقتك في الروتين</h2>
             <p>
-              لا تخلي الفوضى تضيّع عليك زبونات. جرّبي النظام أو احجزي استشارة مجانية
+              كوني من بين الـ 5 الأوائل هاد الشهر واستفيدي من **تركيب مجاني** وقالب CostCrafter هدية.
             </p>
             <div className="final-cta-buttons">
               <Link to="/demo" className="btn btn-primary btn-lg">
                 <Play size={24} />
-                جرّبي Demo
+                سييه درك (Demo)
               </Link>
               <button
                 onClick={() => (window as any).$chatwoot.toggle()}
                 className="btn btn-secondary btn-lg"
               >
-                <Calendar size={24} />
+                <WhatsAppIcon size={24} />
                 احجزي استشارة مجانية
               </button>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Mobile Sticky CTA */}
+      <div className="mobile-only sticky-cta">
+        <Link to="/demo" className="btn btn-primary w-full">ابدئي Demo مجاناً 🚀</Link>
+      </div>
 
       {/* Footer */}
       <footer className="footer">
