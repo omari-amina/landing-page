@@ -381,7 +381,7 @@ export default function DemoPage() {
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                     />
-                    <button type="submit" className="send-btn"><Send size={20} /></button>
+                    <button type="submit" className="send-btn" title="إرسال الرسالة"><Send size={20} /></button>
                   </form>
                 </>
               ) : (
@@ -408,7 +408,7 @@ export default function DemoPage() {
                         <span>احتمالية الشراء</span>
                         <span className="prob-value high">85%</span>
                       </div>
-                      <div className="prob-bar"><div className="prob-fill" style={{ width: '85%' }}></div></div>
+                      <div className="prob-bar"><div className="prob-fill win-prob-85"></div></div>
                       <p className="ai-suggestion">
                         <Lightbulb size={12} className="inline ml-1" />
                         الزبونة مهتمة بالسعر والتوصيل. <strong>نصيحة:</strong> قدمي عرض التوصيل المجاني لإغلاق الصفقة الآن.
@@ -953,7 +953,8 @@ export default function DemoPage() {
         .ai-header { color: var(--secondary-color); font-size: 1.1rem; font-weight: 900; margin-bottom: 1.25rem; }
         .win-probability { font-weight: 800; font-size: 0.9rem; }
         .prob-bar { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.1); margin: 0.75rem 0 1.25rem 0; }
-        .prob-fill { background: linear-gradient(90deg, #eeb32a, #fde047); box-shadow: 0 0 15px rgba(238, 179, 42, 0.6); }
+        .prob-fill { background: linear-gradient(90deg, #eeb32a, #fde047); box-shadow: 0 0 15px rgba(238, 179, 42, 0.6); transition: width 1s ease-out; }
+        .win-prob-85 { width: 85%; }
 
         .cta-link-btn {
           border-radius: 16px;
