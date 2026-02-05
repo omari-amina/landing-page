@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { WaslaLogo } from '../components/WaslaLogo'
 import { InstagramIcon, FacebookIcon, WhatsAppIcon } from '../components/SocialIcons'
+
 import {
-  Send,
-  LayoutDashboard, Inbox, Users, Zap, Settings, Search, ChevronRight,
-  Bell, MoreVertical, Phone, UserPlus, FileText,
-  TrendingUp, MessageSquare, Clock, Filter, CheckCircle
+  Send, LayoutDashboard, Inbox, Users, Zap, Settings, Search, ChevronRight,
+  Bell, MoreVertical, Phone, UserPlus, FileText, TrendingUp, MessageSquare,
+  Clock, Filter, CheckCircle, Sparkles, Brain, Lightbulb, Link as LinkIcon
 } from 'lucide-react'
+import { DemoTour, TourStep } from '../components/DemoTour'
+import { TypebotModal } from '../components/TypebotModal'
 
 // Types for our Dashboard
 interface Contact {
@@ -35,19 +37,62 @@ export default function DemoPage() {
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false)
   const [contacts, setContacts] = useState<Contact[]>([
-    { id: 1, name: 'سارة أحمد', platform: 'instagram', status: 'completed', lastMessage: 'تم تأكيد الحجز، شكراً!', timeAgo: 'منذ ساعتين', avatar: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 555 12 34 56', tags: ['زبونة دائمة', 'دورة الخياطة'] },
-    { id: 2, name: 'نورة محمد', platform: 'whatsapp', status: 'processing', lastMessage: 'هل يمكن الدفع عند الاستلام؟', timeAgo: 'منذ 5 د', avatar: 'https://images.unsplash.com/photo-1563240381-5ccf7690ca08?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 661 98 76 54', tags: ['مهتمة', 'استفسار'] },
-    { id: 3, name: 'ليلى كريم', platform: 'facebook', status: 'new', lastMessage: 'ممكن تفاصيل الأسعار؟', timeAgo: 'الآن', avatar: 'https://images.unsplash.com/photo-1609358913973-28b3f67f70a7?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 770 11 22 33', tags: ['جديدة'] },
+    { id: 1, name: 'سارة م. (Sarah)', platform: 'instagram', status: 'new', lastMessage: 'بشحال؟', timeAgo: 'الآن', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop', tags: ['مهتمة', 'انستجرام'] },
+    { id: 2, name: 'نورهان ب.', platform: 'whatsapp', status: 'completed', lastMessage: 'وصلني البرنامج، روعة! 😍', timeAgo: 'منذ يوم', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 661 00 00 00', tags: ['زبونة', 'Stickers'] },
+    { id: 3, name: 'أمينة ط.', platform: 'facebook', status: 'new', lastMessage: 'هل يعمل على الماك؟', timeAgo: 'منذ ساعة', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 550 11 22 33', tags: ['استفسار'] },
   ])
 
   const [chatMessages, setChatMessages] = useState<Message[]>([
-    { id: 1, sender: 'contact', text: 'السلام عليكم، هل الكورس مازال متاح؟', time: '10:00 AM' },
-    { id: 2, sender: 'bot', text: 'وعليكم السلام يا أهلا! نعم الكورس متاح ويمكنك التسجيل الآن عبر الرابط.', time: '10:01 AM' },
-    { id: 3, sender: 'me', text: 'أهلاً بكِ سارة، هل لديكِ أي استفسار حول المحتوى؟', time: '10:15 AM' },
+    { id: 1, sender: 'contact', text: 'بشحال؟', time: '10:00 AM' },
   ])
 
   const [newMessage, setNewMessage] = useState('')
+  const [isTourOpen, setIsTourOpen] = useState(true)
+  const [isTypebotOpen, setIsTypebotOpen] = useState(false)
+  const [showN8nToast, setShowN8nToast] = useState(false)
+  const [salesCount, setSalesCount] = useState(12500)
+
   const chatEndRef = useRef<HTMLDivElement>(null)
+
+  const simulateAIReply = () => {
+    // Scenario Step 2: Auto-reply with Pricing + CTA
+    const text = "أهلاً سارة! 👋 برنامج CostCrafter Pro متوفر بـ 3000 دج فقط (ترخيص مدى الحياة). ⚡ اطلبي نسختك فوراً من هنا: 👇";
+    setNewMessage('');
+    let i = 0;
+    const interval = setInterval(() => {
+      setNewMessage(text.substring(0, i + 1));
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, 20);
+  }
+
+  const tourSteps: TourStep[] = [
+    {
+      target: '.sidebar',
+      title: 'أهلاً بك في NawaEduTech',
+      content: 'منصتك المتكاملة لإدارة مبيعات CostCrafter Pro.',
+      position: 'left'
+    },
+    {
+      target: '#inbox-tab',
+      title: 'الـ Inbox الموحد 📥',
+      content: 'كل رسائل انستجرام "بشحال؟" تصل هنا فوراً.',
+      position: 'left'
+    },
+    {
+      target: '#contact-item-1',
+      title: 'رسالة جديدة من سارة',
+      content: 'انظري! سارة تسأل عن السعر. لنرد عليها آلياً.',
+      position: 'left',
+      action: () => handleContactSelect(contacts[0])
+    },
+    {
+      target: '#smart-reply-btn',
+      title: 'الرد الذكي (Auto-Reply)',
+      content: 'اضغطي الزر السحري لإرسال تفاصيل السعر ورابط الشراء في ثانية!',
+      position: 'top'
+    }
+  ];
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -64,8 +109,30 @@ export default function DemoPage() {
       time: new Date().toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }),
       status: 'sent'
     }
+
     setChatMessages([...chatMessages, msg])
     setNewMessage('')
+
+    // Scenario Step 2.5: If message contains CTA, show the button in chat
+    setTimeout(() => {
+      const ctaMsg: Message = {
+        id: Date.now() + 1,
+        sender: 'bot',
+        text: '✨ رابط طلب النسخة',
+        time: 'Just now'
+      }
+      // We'll treat this specially in rendering
+      setChatMessages(prev => [...prev, ctaMsg])
+    }, 600)
+  }
+
+  const handleTypebotComplete = () => {
+    // Scenario Step 4: n8n + Sheets Simulation
+    setShowN8nToast(true);
+    setTimeout(() => setShowN8nToast(false), 5000);
+
+    // Update Dashboard
+    setSalesCount(prev => prev + 3000);
   }
 
   // Set default selected contact on load
@@ -88,7 +155,7 @@ export default function DemoPage() {
       <aside className="sidebar">
         <div className="sidebar-header">
           <WaslaLogo size={40} />
-          <span className="brand-name">وصلة</span>
+          <span className="brand-name">NawaEduTech</span>
         </div>
 
         <nav className="sidebar-nav">
@@ -96,7 +163,7 @@ export default function DemoPage() {
             <LayoutDashboard size={20} />
             <span>لوحة التحكم</span>
           </button>
-          <button className={`nav-item ${activeTab === 'inbox' ? 'active' : ''}`} onClick={() => setActiveTab('inbox')}>
+          <button id="inbox-tab" className={`nav-item ${activeTab === 'inbox' ? 'active' : ''}`} onClick={() => setActiveTab('inbox')}>
             <div className="nav-item-content">
               <Inbox size={20} />
               <span>صندوق الوارد</span>
@@ -121,8 +188,8 @@ export default function DemoPage() {
           <div className="user-profile">
             <img src="https://images.unsplash.com/photo-1596704017254-9b121068fb29?q=80&w=150&h=150&auto=format&fit=crop" alt="User" />
             <div className="user-info">
-              <p className="user-name">أمينة</p>
-              <p className="user-plan">خطة احترافية</p>
+              <p className="user-name">Amna (Owner)</p>
+              <p className="user-plan">Pro Plan</p>
             </div>
           </div>
         </div>
@@ -158,6 +225,7 @@ export default function DemoPage() {
                 {contacts.map(contact => (
                   <div
                     key={contact.id}
+                    id={`contact-item-${contact.id}`}
                     className={`conv-item ${selectedContact?.id === contact.id ? 'active' : ''}`}
                     onClick={() => handleContactSelect(contact)}
                   >
@@ -213,7 +281,16 @@ export default function DemoPage() {
                     {chatMessages.map(msg => (
                       <div key={msg.id} className={`message-bubble-wrapper ${msg.sender}`}>
                         <div className="message-bubble">
-                          <p>{msg.text}</p>
+                          {msg.text === '✨ رابط طلب النسخة' ? (
+                            <button
+                              className="cta-link-btn"
+                              onClick={() => setIsTypebotOpen(true)}
+                            >
+                              <LinkIcon size={16} /> اطلبي نسختك الآن
+                            </button>
+                          ) : (
+                            <p>{msg.text}</p>
+                          )}
                           <span className="message-time">{msg.time}</span>
                         </div>
                       </div>
@@ -222,6 +299,15 @@ export default function DemoPage() {
                   </div>
 
                   <form className="chat-input" onSubmit={handleSendMessage}>
+                    <button
+                      type="button"
+                      id="smart-reply-btn"
+                      className="smart-reply-btn"
+                      onClick={simulateAIReply}
+                      title="توليد رد بالذكاء الاصطناعي"
+                    >
+                      <Sparkles size={18} />
+                    </button>
                     <input
                       type="text"
                       placeholder="اكتبي رسالتك هنا..."
@@ -243,6 +329,26 @@ export default function DemoPage() {
             <div className="details-panel">
               {selectedContact && (
                 <div className="details-content">
+
+                  {/* AI Insight Card */}
+                  <div id="ai-insight-box" className="ai-insight-card">
+                    <div className="ai-header">
+                      <Brain size={16} />
+                      <span>تحليل الذكاء الاصطناعي</span>
+                    </div>
+                    <div className="ai-body">
+                      <div className="win-probability">
+                        <span>احتمالية الشراء</span>
+                        <span className="prob-value high">85%</span>
+                      </div>
+                      <div className="prob-bar"><div className="prob-fill" style={{ width: '85%' }}></div></div>
+                      <p className="ai-suggestion">
+                        <Lightbulb size={12} className="inline ml-1" />
+                        الزبونة مهتمة بالسعر والتوصيل. <strong>نصيحة:</strong> قدمي عرض التوصيل المجاني لإغلاق الصفقة الآن.
+                      </p>
+                    </div>
+                  </div>
+
                   <div className="profile-card">
                     <img src={selectedContact.avatar} alt={selectedContact.name} />
                     <h3>{selectedContact.name}</h3>
@@ -298,7 +404,7 @@ export default function DemoPage() {
                   <TrendingUp size={20} className="text-success" />
                   <span>المبيعات اليوم</span>
                 </div>
-                <div className="metric-value">12,500 دج</div>
+                <div className="metric-value">{salesCount.toLocaleString()} دج</div>
                 <div className="metric-change positive">+25% مقارنة بأمس</div>
               </div>
               <div className="metric-card">
@@ -372,14 +478,101 @@ export default function DemoPage() {
         )}
       </main>
 
+      <DemoTour
+        steps={tourSteps}
+        isOpen={isTourOpen}
+        onComplete={() => setIsTourOpen(false)}
+        onSkip={() => setIsTourOpen(false)}
+      />
+
+      <TypebotModal
+        isOpen={isTypebotOpen}
+        onClose={() => setIsTypebotOpen(false)}
+        onComplete={handleTypebotComplete}
+      />
+
+      {/* n8n Toast Notification */}
+      {showN8nToast && (
+        <div className="n8n-toast">
+          <div className="toast-content">
+            <div className="n8n-icon">⚡</div>
+            <div>
+              <h4>Automation Success</h4>
+              <p>Data sent to Google Sheets & Notification Sent!</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       <style>{`
         .dashboard-layout {
           display: flex;
           height: 100vh;
-          background-color: #f1f5f9;
-          font-family: 'Tajawal', sans-serif;
+          background-color: #f8fafc;
+          font-family: 'Cairo', 'Tajawal', sans-serif;
           direction: rtl;
         }
+        
+        /* Nawa Theme Overrides */
+        .brand-name { color: #310b82; }
+        .sidebar-nav .nav-item.active { background: #fdf4ff; color: #310b82; border-right: 3px solid #eeb32a; }
+        .sidebar-nav .nav-item:hover { color: #310b82; }
+        .sidebar-nav .badge { background: #eeb32a; color: #310b82; }
+        .smart-reply-btn { background: linear-gradient(135deg, #310b82, #4c1db0); }
+        .send-btn { background: #310b82; }
+        .me .message-bubble { background: #310b82; }
+        
+        .cta-link-btn {
+           background: #eeb32a;
+           color: #310b82;
+           border: none;
+           padding: 0.5rem 1rem;
+           border-radius: 8px;
+           font-weight: 800;
+           display: flex;
+           align-items: center;
+           gap: 8px;
+           cursor: pointer;
+           margin-top: 5px;
+           animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+           0% { transform: scale(1); }
+           50% { transform: scale(1.02); }
+           100% { transform: scale(1); }
+        }
+
+        .n8n-toast {
+           position: fixed;
+           bottom: 30px;
+           left: 30px; /* Left because RTL layout means notifications usually easier on non-nav side or center, putting left for visibility */
+           background: white;
+           border-radius: 12px;
+           box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+           z-index: 100000;
+           overflow: hidden;
+           border-right: 5px solid #ff6b6b; /* n8n colorish */
+           animation: slideInLeft 0.5s ease-out;
+        }
+        @keyframes slideInLeft {
+           from { transform: translateX(-100%); opacity: 0; }
+           to { transform: translateX(0); opacity: 1; }
+        }
+        .toast-content {
+           padding: 1rem;
+           display: flex;
+           align-items: center;
+           gap: 1rem;
+        }
+        .n8n-icon {
+           font-size: 1.5rem;
+           background: #ffe4e6;
+           width: 40px; height: 40px;
+           display: flex; align-items: center; justify-content: center;
+           border-radius: 50%;
+        }
+        .n8n-toast h4 { margin: 0; font-size: 0.95rem; font-weight: 800; color: #310b82; }
+        .n8n-toast p { margin: 0; font-size: 0.8rem; color: #64748b; }
 
         /* Sidebar */
         .sidebar {
@@ -669,6 +862,28 @@ export default function DemoPage() {
         }
         .send-btn:hover { transform: scale(1.05); }
 
+        .smart-reply-btn {
+          background: linear-gradient(135deg, #6366f1, #a855f7);
+          border: none;
+          width: 42px;
+          height: 48px;
+          border-radius: 12px;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s;
+          animation: pulse-glow 2s infinite;
+        }
+        .smart-reply-btn:hover { transform: scale(1.1); filter: brightness(1.1); }
+
+        @keyframes pulse-glow {
+          0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4); }
+          70% { box-shadow: 0 0 0 10px rgba(168, 85, 247, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
+        }
+
         /* Details Panel */
         .details-panel {
           width: 300px;
@@ -677,6 +892,22 @@ export default function DemoPage() {
           padding: 2rem 1.5rem;
           overflow-y: auto;
         }
+
+        .ai-insight-card {
+          background: linear-gradient(to bottom right, #fdf4ff, #fae8ff);
+          border: 1px solid #f0abfc;
+          border-radius: 16px;
+          padding: 1rem;
+          margin-bottom: 2rem;
+        }
+        .ai-header { display: flex; align-items: center; gap: 0.5rem; color: #9333ea; font-weight: 800; font-size: 0.9rem; margin-bottom: 1rem; }
+        .win-probability { display: flex; justify-content: space-between; font-size: 0.8rem; color: #4b5563; margin-bottom: 0.5rem; }
+        .prob-value { font-weight: 800; }
+        .prob-value.high { color: #16a34a; }
+        .prob-bar { height: 6px; background: #e9d5ff; border-radius: 3px; overflow: hidden; margin-bottom: 1rem; }
+        .prob-fill { height: 100%; background: #16a34a; border-radius: 3px; }
+        .ai-suggestion { font-size: 0.8rem; color: #6b7280; line-height: 1.5; background: rgba(255,255,255,0.6); padding: 0.75rem; border-radius: 8px; }
+
         .profile-card { text-align: center; margin-bottom: 2rem; }
         .profile-card img { width: 100px; height: 100px; border-radius: 20px; object-fit: cover; margin-bottom: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         .profile-card h3 { margin-bottom: 0.25rem; font-size: 1.2rem; }
