@@ -88,7 +88,7 @@ export default function DemoPage() {
           conv.meta.channel.split('::')[1]?.toLowerCase().includes('whatsapp') ? 'whatsapp' : 'facebook',
         status: conv.status === 'open' ? 'new' : 'completed',
         lastMessage: conv.messages?.[0]?.content || '',
-        timeAgo: new Date(conv.timestamp * 100).toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }),
+        timeAgo: new Date(conv.timestamp * 1000).toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }),
         avatar: conv.meta.sender.thumbnail || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop',
         tags: conv.labels || []
       }));
