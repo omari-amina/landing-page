@@ -11,6 +11,10 @@ import {
 import { DemoTour, TourStep } from '../components/DemoTour'
 import { TypebotModal } from '../components/TypebotModal'
 
+const CHATWOOT_API_TOKEN = 'qhp2k4eENktdWiBDYd87i2S7'
+const CHATWOOT_ACCOUNT_ID = '1'
+const CHATWOOT_BASE_URL = 'https://chatwoot.panel.nawaedutech.com'
+
 // Types for our Dashboard
 interface Contact {
   id: number
@@ -36,15 +40,9 @@ export default function DemoPage() {
   const [activeTab, setActiveTab] = useState('inbox')
   const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false)
-  const [contacts, setContacts] = useState<Contact[]>([
-    { id: 1, name: 'سارة م. (Sarah)', platform: 'instagram', status: 'new', lastMessage: 'بشحال؟', timeAgo: 'الآن', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop', tags: ['مهتمة', 'انستجرام'] },
-    { id: 2, name: 'نورهان ب.', platform: 'whatsapp', status: 'completed', lastMessage: 'وصلني البرنامج، روعة! 😍', timeAgo: 'منذ يوم', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 661 00 00 00', tags: ['زبونة', 'Stickers'] },
-    { id: 3, name: 'أمينة ط.', platform: 'facebook', status: 'new', lastMessage: 'هل يعمل على الماك؟', timeAgo: 'منذ ساعة', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&h=150&auto=format&fit=crop', phone: '+213 550 11 22 33', tags: ['استفسار'] },
-  ])
+  const [contacts, setContacts] = useState<Contact[]>([])
 
-  const [chatMessages, setChatMessages] = useState<Message[]>([
-    { id: 1, sender: 'contact', text: 'بشحال؟', time: '10:00 AM' },
-  ])
+  const [chatMessages, setChatMessages] = useState<Message[]>([])
 
   const [newMessage, setNewMessage] = useState('')
   const [isTourOpen, setIsTourOpen] = useState(true)
@@ -54,16 +52,93 @@ export default function DemoPage() {
 
   const chatEndRef = useRef<HTMLDivElement>(null)
 
-  const simulateAIReply = () => {
+  const simulateAIReply = async () => {
+    if (!selectedContact) return;
+
     // Scenario Step 2: Auto-reply with Pricing + CTA
     const text = "أهلاً سارة! 👋 برنامج CostCrafter Pro متوفر بـ 3000 دج فقط (ترخيص مدى الحياة). ⚡ اطلبي نسختك فوراً من هنا: 👇";
+
+    // Send Real Message to Chatwoot
+    await sendChatwootMessage(selectedContact.id, text);
+
+    // Also send the CTA link as a separate message
+    setTimeout(async () => {
+      await sendChatwootMessage(selectedContact.id, '✨ رابط طلب النسخة');
+      fetchMessages(selectedContact.id);
+    }, 1000);
+
     setNewMessage('');
-    let i = 0;
-    const interval = setInterval(() => {
-      setNewMessage(text.substring(0, i + 1));
-      i++;
-      if (i >= text.length) clearInterval(interval);
-    }, 20);
+    fetchMessages(selectedContact.id);
+  }
+
+  const fetchConversations = async () => {
+    try {
+      const response = await fetch(`${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations`, {
+        headers: {
+          'api_access_token': CHATWOOT_API_TOKEN,
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+
+      const mappedContacts: Contact[] = data.payload.map((conv: any) => ({
+        id: conv.id,
+        name: conv.meta.sender.name || 'عميل مجهول',
+        platform: conv.meta.channel.split('::')[1]?.toLowerCase().includes('instagram') ? 'instagram' :
+          conv.meta.channel.split('::')[1]?.toLowerCase().includes('whatsapp') ? 'whatsapp' : 'facebook',
+        status: conv.status === 'open' ? 'new' : 'completed',
+        lastMessage: conv.messages?.[0]?.content || '',
+        timeAgo: new Date(conv.timestamp * 100).toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }),
+        avatar: conv.meta.sender.thumbnail || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop',
+        tags: conv.labels || []
+      }));
+
+      setContacts(mappedContacts);
+      if (!selectedContact && mappedContacts.length > 0) {
+        setSelectedContact(mappedContacts[0]);
+      }
+    } catch (error) {
+      console.error('Error fetching conversations:', error);
+    }
+  }
+
+  const fetchMessages = async (conversationId: number) => {
+    try {
+      const response = await fetch(`${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${conversationId}/messages`, {
+        headers: {
+          'api_access_token': CHATWOOT_API_TOKEN,
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+
+      const mappedMessages: Message[] = data.payload.map((msg: any) => ({
+        id: msg.id,
+        sender: msg.message_type === 0 ? 'contact' : 'me',
+        text: msg.content || '',
+        time: new Date(msg.created_at).toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }),
+        status: 'read'
+      }));
+
+      setChatMessages(mappedMessages);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  }
+
+  const sendChatwootMessage = async (conversationId: number, content: string) => {
+    try {
+      await fetch(`${CHATWOOT_BASE_URL}/api/v1/accounts/${CHATWOOT_ACCOUNT_ID}/conversations/${conversationId}/messages`, {
+        method: 'POST',
+        headers: {
+          'api_access_token': CHATWOOT_API_TOKEN,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content, message_type: 'outgoing' })
+      });
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   }
 
   const tourSteps: TourStep[] = [
@@ -98,33 +173,16 @@ export default function DemoPage() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [chatMessages])
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!newMessage.trim()) return
+    if (!newMessage.trim() || !selectedContact) return
 
-    const msg: Message = {
-      id: Date.now(),
-      sender: 'me',
-      text: newMessage,
-      time: new Date().toLocaleTimeString('ar-DZ', { hour: '2-digit', minute: '2-digit' }),
-      status: 'sent'
-    }
-
-    setChatMessages([...chatMessages, msg])
+    await sendChatwootMessage(selectedContact.id, newMessage)
     setNewMessage('')
-
-    // Scenario Step 2.5: If message contains CTA, show the button in chat
-    setTimeout(() => {
-      const ctaMsg: Message = {
-        id: Date.now() + 1,
-        sender: 'bot',
-        text: '✨ رابط طلب النسخة',
-        time: 'Just now'
-      }
-      // We'll treat this specially in rendering
-      setChatMessages(prev => [...prev, ctaMsg])
-    }, 600)
+    fetchMessages(selectedContact.id)
   }
+
+
 
   const handleTypebotComplete = () => {
     // Scenario Step 4: n8n + Sheets Simulation
@@ -135,12 +193,19 @@ export default function DemoPage() {
     setSalesCount(prev => prev + 3000);
   }
 
-  // Set default selected contact on load
+  // Fetch conversations on load
   useEffect(() => {
-    if (!selectedContact && contacts.length > 0 && window.innerWidth > 768) {
-      setSelectedContact(contacts[1]) // Select Noura as default on desktop
-    }
+    fetchConversations();
+    const interval = setInterval(fetchConversations, 10000); // Polling every 10s
+    return () => clearInterval(interval);
   }, [])
+
+  // Fetch messages when contact changes
+  useEffect(() => {
+    if (selectedContact) {
+      fetchMessages(selectedContact.id);
+    }
+  }, [selectedContact])
 
   const handleContactSelect = (contact: Contact) => {
     setSelectedContact(contact)
