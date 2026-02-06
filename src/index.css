@@ -4,17 +4,16 @@
 
 /* --- CSS Variables (Design Tokens) --- */
 :root {
-  /* Brand Colors - NawaEduTech Professional */
-  /* Primary: Deep Purple - Sophisticated & Professional */
-  --color-primary: #310b82;
-  --color-primary-dark: #1e0652;
-  --color-primary-light: #4c1db0;
-  --color-primary-fade: rgba(49, 11, 130, 0.05);
+  /* Brand Colors - Wasla Original */
+  --color-primary: #be185d;
+  --color-primary-dark: #9d174d;
+  --color-primary-light: #db2777;
+  --color-primary-fade: rgba(190, 24, 93, 0.05);
 
-  /* Accent: Nawa Gold - Premium & Excellence */
-  --color-accent: #eeb32a;
-  --color-accent-dark: #b5891d;
-  --color-accent-light: #fde047;
+  /* Accent: Wasla Teal - Fresh & Tech */
+  --color-accent: #0d9488;
+  --color-accent-dark: #0f766e;
+  --color-accent-light: #2dd4bf;
 
 
   /* Neutral Colors - Clean & Light */

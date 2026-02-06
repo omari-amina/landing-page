@@ -96,22 +96,22 @@ export default function LandingPage() {
           </p>
           <div className="grid-4 problems-grid">
             <div className="card problem-card">
-              <div className="problem-icon"><Smartphone strokeWidth={1.5} size={48} color="#310b82" /></div>
+              <div className="problem-icon"><Smartphone strokeWidth={1.5} size={48} color="#be185d" /></div>
               <h3>كثرة الرسائل</h3>
               <p>رسائل من كل مكان... Instagram، Facebook، WhatsApp. مين تردي أولاً؟</p>
             </div>
             <div className="card problem-card">
-              <div className="problem-icon"><AlertOctagon strokeWidth={1.5} size={48} color="#310b82" /></div>
+              <div className="problem-icon"><AlertOctagon strokeWidth={1.5} size={48} color="#be185d" /></div>
               <h3>نسيان الرد</h3>
               <p>زبونة سألت عن المنتج ونسيتي تردي عليها... وراحت</p>
             </div>
             <div className="card problem-card">
-              <div className="problem-icon"><TrendingDown strokeWidth={1.5} size={48} color="#310b82" /></div>
+              <div className="problem-icon"><TrendingDown strokeWidth={1.5} size={48} color="#be185d" /></div>
               <h3>ضياع زبونات</h3>
               <p>زبونات مهتمات ضاعوا بين الرسائل. فرص ضائعة كل يوم</p>
             </div>
             <div className="card problem-card">
-              <div className="problem-icon"><Clock strokeWidth={1.5} size={48} color="#310b82" /></div>
+              <div className="problem-icon"><Clock strokeWidth={1.5} size={48} color="#be185d" /></div>
               <h3>ضغط يومي</h3>
               <p>تحسي بالإرهاق من كثرة المتابعة. الشغل ما يخلص</p>
             </div>
@@ -132,14 +132,14 @@ export default function LandingPage() {
             </div>
             <div className="solutions-list">
               <div className="solution-item">
-                <div className="solution-icon"><Target strokeWidth={1.5} size={40} color="#eeb32a" /></div>
+                <div className="solution-icon"><Target strokeWidth={1.5} size={40} color="#0d9488" /></div>
                 <div className="solution-text">
                   <h3>CRM مخصص</h3>
                   <p>نظام مصمم خصيصًا لصاحبات المشاريع الصغيرة. بسيط وفعّال</p>
                 </div>
               </div>
               <div className="solution-item">
-                <div className="solution-icon"><Bot strokeWidth={1.5} size={40} color="#eeb32a" /></div>
+                <div className="solution-icon"><Bot strokeWidth={1.5} size={40} color="#0d9488" /></div>
                 <div className="solution-text">
                   <h3>أتمتة ذكية</h3>
                   <p>ردود تلقائية، تذكيرات، ومتابعة بدون تدخل منك</p>
@@ -153,7 +153,7 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className="solution-item">
-                <div className="solution-icon"><RefreshCw strokeWidth={1.5} size={40} color="#eeb32a" /></div>
+                <div className="solution-icon"><RefreshCw strokeWidth={1.5} size={40} color="#0d9488" /></div>
                 <div className="solution-text">
                   <h3>Bots للرد والمتابعة</h3>
                   <p>بوتات ذكية ترد على الأسئلة المتكررة وتتابع الزبونات</p>
@@ -182,19 +182,19 @@ export default function LandingPage() {
               </div>
               <div className="step-card">
                 <div className="step-number">2</div>
-                <div className="step-icon"><Inbox strokeWidth={1.5} size={48} color="#310b82" /></div>
+                <div className="step-icon"><Inbox strokeWidth={1.5} size={48} color="#be185d" /></div>
                 <h3>تُسجّل تلقائيًا</h3>
                 <p>الرسالة تظهر فورًا في النظام مع كل التفاصيل</p>
               </div>
               <div className="step-card">
                 <div className="step-number">3</div>
-                <div className="step-icon"><Tag strokeWidth={1.5} size={48} color="#310b82" /></div>
+                <div className="step-icon"><Tag strokeWidth={1.5} size={48} color="#be185d" /></div>
                 <h3>تصنيف + متابعة</h3>
                 <p>النظام يصنف الرسالة (استفسار، طلب، شكوى) ويتابعها</p>
               </div>
               <div className="step-card">
                 <div className="step-number">4</div>
-                <div className="step-icon"><CheckCircle strokeWidth={1.5} size={48} color="#310b82" /></div>
+                <div className="step-icon"><CheckCircle strokeWidth={1.5} size={48} color="#be185d" /></div>
                 <h3>تحويلها إلى طلب</h3>
                 <p>الزبونة تتحول إلى طلب مكتمل ومتابَع</p>
               </div>
@@ -229,7 +229,7 @@ export default function LandingPage() {
       </section>
 
       {/* Real Case Study Example (Printers / CostCrafter) */}
-      <section className="section bg-primary-fade" style={{ background: 'rgba(49, 11, 130, 0.03)' }}>
+      <section className="section bg-primary-fade" style={{ background: 'rgba(190, 24, 93, 0.03)' }}>
         <div className="container">
           <div className="printing-upsell-card card">
             <div className="grid-2">
@@ -265,22 +265,22 @@ export default function LandingPage() {
           </p>
           <div className="grid-4 audience-grid">
             <div className="card audience-card">
-              <div className="audience-icon"><Palette strokeWidth={1.5} size={48} color="#eeb32a" /></div>
+              <div className="audience-icon"><Palette strokeWidth={1.5} size={48} color="#0d9488" /></div>
               <h3>صاحبات المطابع</h3>
               <p>حساب التكاليف، إدارة الطلبات، ومتابعة التصاميم بذكاء.</p>
             </div>
             <div className="card audience-card">
-              <div className="audience-icon"><ShoppingBag strokeWidth={1.5} size={48} color="#eeb32a" /></div>
+              <div className="audience-icon"><ShoppingBag strokeWidth={1.5} size={48} color="#0d9488" /></div>
               <h3>متاجر الهدايا</h3>
               <p>إدارة الطلبات المخصصة والتوصيل بدون نسيان أي تفصيل.</p>
             </div>
             <div className="card audience-card">
-              <div className="audience-icon"><BookOpen strokeWidth={1.5} size={48} color="#eeb32a" /></div>
+              <div className="audience-icon"><BookOpen strokeWidth={1.5} size={48} color="#0d9488" /></div>
               <h3>التدريب والكورسات</h3>
               <p>تسجيل المتدربات آلياً وإرسال المواعيد عبر واتساب.</p>
             </div>
             <div className="card audience-card">
-              <div className="audience-icon"><Dumbbell strokeWidth={1.5} size={48} color="#eeb32a" /></div>
+              <div className="audience-icon"><Dumbbell strokeWidth={1.5} size={48} color="#0d9488" /></div>
               <h3>خدمات منزلية</h3>
               <p>تنظيم المواعيد والدروس الخصوصية والحلويات وغيرها.</p>
             </div>

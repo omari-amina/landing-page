@@ -789,7 +789,7 @@ export default function DemoPage() {
 
         .metric-card:hover { 
           transform: translateY(-10px); 
-          box-shadow: 0 20px 40px rgba(49, 11, 130, 0.08); 
+          box-shadow: 0 20px 40px rgba(190, 24, 93, 0.08); 
           background: rgba(255, 255, 255, 0.85);
         }
         
@@ -800,7 +800,7 @@ export default function DemoPage() {
           left: 0; 
           width: 8px; 
           height: 100%; 
-          background: linear-gradient(180deg, var(--secondary-color) 0%, #fde047 100%);
+          background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-accent) 100%);
         }
 
         .metric-header { display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 1rem; margin-bottom: 1.5rem; font-weight: 800; }
@@ -1015,9 +1015,9 @@ export default function DemoPage() {
           backdrop-filter: blur(15px);
           border: 1px solid rgba(255,255,255,0.8);
           padding: 1.25rem 2rem;
-          border-right: 8px solid var(--secondary-color);
+          border-right: 8px solid var(--color-primary);
           border-radius: 24px;
-          box-shadow: 0 15px 50px rgba(49, 11, 130, 0.15);
+          box-shadow: 0 15px 50px rgba(190, 24, 93, 0.15);
         }
 
         /* Mobile Adjustments */
