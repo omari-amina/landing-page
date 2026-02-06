@@ -20,11 +20,11 @@ export default function LandingPage() {
           <div className="nav-buttons">
             <Link to="/demo" className="btn btn-secondary">جرّبي Demo</Link>
             <button
-              onClick={() => (window as any).$chatwoot.toggle()}
+              onClick={() => (window as any).$chatwoot?.toggle('open')}
               className="btn btn-primary"
             >
               <Calendar className="w-5 h-5" size={20} />
-              احجزي استشارة
+              احجزي استشارة (Live Chat)
             </button>
           </div>
         </div>
@@ -53,13 +53,15 @@ export default function LandingPage() {
                 <Play className="icon-sm" size={24} />
                 سييه درك (Demo مجاني)
               </Link>
-              <button
-                onClick={() => (window as any).$chatwoot.toggle()}
+              <a
+                href="https://wa.me/213000000000?text=سلام، حابة نفهم خدمة وصلة"
+                target="_blank"
+                rel="noreferrer noopener"
                 className="btn btn-secondary btn-lg"
               >
-                <Calendar className="icon-sm" size={24} />
+                <WhatsAppIcon size={24} />
                 احكي معانا فـ واتساب
-              </button>
+              </a>
             </div>
 
             <div className="social-proof-small animate-fade-in" style={{ animationDelay: '0.4s' }}>
@@ -244,7 +246,7 @@ export default function LandingPage() {
                   <li><CheckCircle size={16} /> حساب هوامش الربح بدقة متناهية.</li>
                   <li><CheckCircle size={16} /> إرسال فواتير احترافية ومتابعة الدفع.</li>
                 </ul>
-                <Link to="/demo" className="btn btn-primary">شاهد آلية العمل في الديمو</Link>
+                <Link to="/use-cases/printing" className="btn btn-primary">شوفي قصة النجاح كاملة</Link>
               </div>
               <div className="upsell-visual">
                 <div className="case-study-badge">
@@ -435,16 +437,21 @@ export default function LandingPage() {
               كوني من بين الـ 5 الأوائل هاد الشهر واستفيدي من **تركيب مجاني** واستشارة تقنية هدية.
             </p>
             <div className="final-cta-buttons">
-              <Link to="/demo" className="btn btn-primary btn-lg">
-                <Play size={24} />
-                سييه درك (Demo)
-              </Link>
-              <button
-                onClick={() => (window as any).$chatwoot.toggle()}
-                className="btn btn-secondary btn-lg"
+              <a
+                href="https://wa.me/213000000000?text=سلام، حابة نفهم كيفاش تبداو معانا"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="btn btn-primary btn-lg"
               >
                 <WhatsAppIcon size={24} />
-                احجزي استشارة مجانية
+                احكي معانا فـ واتساب
+              </a>
+              <button
+                onClick={() => (window as any).$chatwoot?.toggle('open')}
+                className="btn btn-secondary btn-lg"
+              >
+                <MessageSquare size={24} />
+                احجزي استشارة (Live Chat)
               </button>
             </div>
           </div>
