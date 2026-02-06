@@ -55,15 +55,15 @@ export default function DemoPage() {
   const simulateAIReply = async () => {
     if (!selectedContact) return;
 
-    // Scenario Step 2: Auto-reply with Pricing + CTA
-    const text = "أهلاً سارة! 👋 برنامج CostCrafter Pro متوفر بـ 3000 دج فقط (ترخيص مدى الحياة). ⚡ اطلبي نسختك فوراً من هنا: 👇";
+    // Scenario Step 2: Auto-reply with Service Info + Booking
+    const text = "أهلاً سارة! 👋 يسعدنا اهتمامك بخدماتنا. لتنظيم مشروعك بشكل أفضل، نقترح عليك البدء بطلب (استشارة مجانية) حيث نشرح لكِ كيف نؤتمت مبيعاتك ⚡. يمكنك حجز موعدك من هنا: 👇";
 
     // Send Real Message to Chatwoot
     await sendChatwootMessage(selectedContact.id, text);
 
-    // Also send the CTA link as a separate message
+    // Also send the Booking link as a separate message
     setTimeout(async () => {
-      await sendChatwootMessage(selectedContact.id, '✨ رابط طلب النسخة');
+      await sendChatwootMessage(selectedContact.id, '📅 رابط حجز الاستشارة');
       fetchMessages(selectedContact.id);
     }, 1000);
 
@@ -168,14 +168,14 @@ export default function DemoPage() {
   const tourSteps: TourStep[] = [
     {
       target: '.sidebar',
-      title: 'أهلاً بك في NawaEduTech',
-      content: 'منصتك المتكاملة لإدارة مبيعات CostCrafter Pro.',
+      title: 'أهلاً بك في وصلة (NawaEduTech)',
+      content: 'منصتك الموحدة لإدارة مبيعاتك وتواصلك مع الزبائن بذكاء.',
       position: 'left'
     },
     {
       target: '#inbox-tab',
       title: 'الـ Inbox الموحد 📥',
-      content: 'كل رسائل انستجرام "بشحال؟" تصل هنا فوراً.',
+      content: 'كل رسائل انستجرام وفيسبوك وواتساب تصل هنا في مكان واحد.',
       position: 'left'
     },
     {
@@ -188,7 +188,7 @@ export default function DemoPage() {
     {
       target: '#smart-reply-btn',
       title: 'الرد الذكي (Auto-Reply)',
-      content: 'اضغطي الزر السحري لإرسال تفاصيل السعر ورابط الشراء في ثانية!',
+      content: 'اضغطي الزر السحري لإرسال رد احتراف آلي يتضمن رابط حجز أو استمارة طلب!',
       position: 'top'
     }
   ];
@@ -377,7 +377,7 @@ export default function DemoPage() {
                               className="cta-link-btn"
                               onClick={() => setIsTypebotOpen(true)}
                             >
-                              <LinkIcon size={16} /> اطلبي نسختك الآن
+                              <LinkIcon size={16} /> احجزي استشارتك الآن
                             </button>
                           ) : (
                             <p>{msg.text}</p>
@@ -775,19 +775,32 @@ export default function DemoPage() {
         .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 3rem; }
         
         .metric-card {
-          background: white;
+          background: var(--glass-bg);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
           padding: 2rem;
           border-radius: 28px;
-          border: 1px solid #f1f5f9;
+          border: 1px solid var(--glass-border);
           box-shadow: 0 10px 30px rgba(0,0,0,0.03);
           transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           position: relative;
           overflow: hidden;
         }
 
-        .metric-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+        .metric-card:hover { 
+          transform: translateY(-10px); 
+          box-shadow: 0 20px 40px rgba(49, 11, 130, 0.08); 
+          background: rgba(255, 255, 255, 0.85);
+        }
+        
         .metric-card::after {
-          content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: var(--secondary-color);
+          content: ''; 
+          position: absolute; 
+          top: 0; 
+          left: 0; 
+          width: 8px; 
+          height: 100%; 
+          background: linear-gradient(180deg, var(--secondary-color) 0%, #fde047 100%);
         }
 
         .metric-header { display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 1rem; margin-bottom: 1.5rem; font-weight: 800; }
@@ -1002,9 +1015,9 @@ export default function DemoPage() {
           backdrop-filter: blur(15px);
           border: 1px solid rgba(255,255,255,0.8);
           padding: 1.25rem 2rem;
-          border-right: 8px solid #ff6b6b;
+          border-right: 8px solid var(--secondary-color);
           border-radius: 24px;
-          box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+          box-shadow: 0 15px 50px rgba(49, 11, 130, 0.15);
         }
 
         /* Mobile Adjustments */
