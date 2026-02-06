@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { WaslaLogo } from '../components/WaslaLogo'
 import { Inbox, Zap, MessageSquare, CheckCircle } from 'lucide-react'
